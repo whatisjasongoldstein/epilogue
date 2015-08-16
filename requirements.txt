@@ -1,0 +1,4 @@
+Flask==0.10.1
+libsass==0.8.3
+Flask-Assets==0.10
+peewee==2.6.3

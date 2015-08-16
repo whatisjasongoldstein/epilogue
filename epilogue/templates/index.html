@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Essays et cetera</h1>
+<p>
+The contents herein reflect the poorly edited
+thoughts of the author at the time they were written &mdash;
+likely in an espresso-fueled haze.
+They do not necessarily reflect his present opinion,
+and certainly do not reflect the opinions of any other
+persons or organizations.
+</p>
+<p>
+(...That will keep me out of trouble with the Twitter
+people, right?)
+</p>
+
+<ul class="all-">
+    {% for post in posts %}
+    <li>
+        <a href="{{ post.get_absolute_url() }}">{{ post.title }}</a>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}
