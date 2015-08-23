@@ -2,9 +2,8 @@ import json
 from flask import request
 from werkzeug.exceptions import BadRequest
 
-from app import app
-from settings import secret_webhook_uuid
-from models import Document
+from .app import app, secret_webhook_uuid
+from .models import Document
 
 @app.route('/webhook/%s' % secret_webhook_uuid, methods=['POST', 'GET'])
 def webhook():

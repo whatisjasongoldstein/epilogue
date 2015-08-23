@@ -1,5 +1,5 @@
 import sass
-from app import app
+from .app import app
 from flask.ext.assets import Environment, Bundle, register_filter
 
 from webassets_libsass import LibSass

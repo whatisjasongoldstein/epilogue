@@ -1,10 +1,10 @@
 from __future__ import absolute_import
 
-from app import app
 from flask import render_template
 from werkzeug.exceptions import NotFound
 
-from models import Document
+from .app import app
+from .models import Document
 
 
 @app.route('/')

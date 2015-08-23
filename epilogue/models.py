@@ -1,10 +1,12 @@
 import re
 import uuid
 import datetime
+import unicodedata
+
 from flask import url_for
 from peewee import *
-from app import db
-import unicodedata
+
+from .app import db
 
 class Document(db.Model):
     draft_id = IntegerField()
