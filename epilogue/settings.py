@@ -7,7 +7,7 @@ from playhouse.flask_utils import FlaskDB
 
 APP_DIR = os.path.dirname(os.path.realpath(__file__))
 DATABASE = 'sqliteext:///%s' % os.path.join(APP_DIR, 'epilogue.sqlite')
-DEBUG = True
+DEBUG = False
 
 # TODO: change and hide these
 SECRET_KEY = "Don't tell anyone!"  # Used by Flask to encrypt session cookie.

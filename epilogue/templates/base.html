@@ -6,6 +6,14 @@
         <title>{% block title %}Epilogue: Not a blog.{% endblock title %}</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+        <script src="//use.typekit.net/pby3feb.js"></script>
+        <script>try{Typekit.load({ async: true });}catch(e){}</script>
+
+        {% assets "styles" %}
+            <link rel="stylesheet" type="text/css" href="{{ ASSET_URL }}">
+        {% endassets %}
+
     </head>
     <body>
         <div class="content">
