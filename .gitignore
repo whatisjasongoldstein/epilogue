@@ -1,2 +1,4 @@
 epilogue/media
 epilogue/epilogue.sqlite
+epilogue/static/.webassets-cache
+epilogue/static/gen
