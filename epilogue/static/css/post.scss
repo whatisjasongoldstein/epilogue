@@ -1,0 +1,20 @@
+.post h2 {
+    font-size: 1em;
+}
+
+.post h1 {
+    border-bottom: 0.2em solid rgba(80, 80, 115, 0.25);
+    padding-bottom: 0.5em;
+    margin-bottom: 1em;
+    line-height: 1;
+}
+
+.post img {
+    max-width: 120%;
+    margin-left: -10%;
+    outline: 1px solid #ccc;
+    @media (max-width: 1000px) {
+        max-width: 100%;
+        margin-left: 0;
+    }
+}
