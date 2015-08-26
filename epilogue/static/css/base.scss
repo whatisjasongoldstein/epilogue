@@ -7,6 +7,10 @@ body {
     line-height: 1.4;
     max-width: $line-length;
     margin: 2em auto;
+
+    @media (max-width: $line-length + 80px) {
+        width: calc(100% - 80px);
+    }
 }
 
 a, a:visited {
