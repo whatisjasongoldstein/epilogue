@@ -1,9 +1,11 @@
+import re
 import json
 from flask import request
 from werkzeug.exceptions import BadRequest
 
 from .app import app, secret_webhook_uuid
 from .models import Document
+
 
 @app.route('/webhook/%s' % secret_webhook_uuid, methods=['POST', 'GET'])
 def webhook():
@@ -45,5 +47,6 @@ def webhook():
     doc.created_at = data["created_at"]
     doc.updated_at = data["updated_at"]
     doc.save()
+    doc.download_images()
 
     return "ok"

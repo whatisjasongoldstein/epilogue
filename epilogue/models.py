@@ -1,12 +1,14 @@
+import os
 import re
-import uuid
+import requests
 import datetime
 import unicodedata
+import lxml.html
 
 from flask import url_for
 from peewee import *
 
-from .app import db
+from .app import db, app
 
 class Document(db.Model):
     draft_id = IntegerField()
@@ -40,3 +42,34 @@ class Document(db.Model):
     def get_absolute_url(self):
         return url_for('post', slug=self.slug)
 
+    def download_images(self):
+        tree = lxml.html.fragment_fromstring(self.content_html, create_parent="div")
+        images = tree.xpath("//img[@src]")
+        for img in images:
+            src = img.attrib["src"]
+            resp = requests.get(src)
+
+            filename = resp.headers.get("x-file-name")
+            directory = os.path.join("media/images", str(self.id))
+            
+            file_path = os.path.join(app.static_folder, directory, filename)
+            file_url = "/".join([app.static_url_path, directory, filename])
+
+            # Update the content
+            self.content = self.content.replace(src, file_url)
+            self.content_html = self.content_html.replace(src, file_url)
+
+            # If this item exists, skip it
+            if os.path.exists(file_path):
+                continue
+
+            # Download the file
+            directory = os.path.join(app.static_folder, directory)
+            if not os.path.exists(directory):
+                os.makedirs(directory)
+
+            with open(file_path, "wb") as f:
+                f.write(resp.content)
+                f.close()
+
+        self.save()

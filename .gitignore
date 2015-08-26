@@ -1,4 +1,4 @@
 *.sqlite
-epilogue/media
+epilogue/static/media
 epilogue/static/.webassets-cache
 epilogue/static/gen
