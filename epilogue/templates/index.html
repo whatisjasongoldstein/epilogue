@@ -1,7 +1,10 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Essays et cetera</h1>
+<header>
+    <h1>Drafts</h1>
+    <h2 class="etc">et cetera</h2>
+</header>
 <p>
 The contents herein reflect the poorly edited
 thoughts of the author at the time they were written &mdash;
@@ -19,6 +22,7 @@ people, right?)
     {% for post in posts %}
     <li>
         <a href="{{ post.get_absolute_url() }}">{{ post.title }}</a>
+        <time>{{ post.readable_date_published }}</time>
     </li>
     {% endfor %}
 </ul>

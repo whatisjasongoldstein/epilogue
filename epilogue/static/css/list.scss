@@ -1,0 +1,40 @@
+header {
+    border-bottom: 5px solid black;
+    margin-bottom: 40px;
+    padding: 20px 0 10px 0;
+
+    h1, h2 {
+        margin: 0;
+        line-height: 1;
+    }
+
+    h2 {
+        font-size: 1rem;
+        font-weight: 100;
+        font-style: italic;
+    }
+}
+
+.post-list {
+    margin: 40px 0;
+    padding: 0;
+    list-style-type: none;
+
+    li {
+        line-height: 1;
+        &:before {
+            content: "";
+            border-bottom: 1px solid #ccc;
+            display: block;
+            width: 33%;
+            margin: 20px 0;
+        }
+        
+        a {background: none; display: block;}
+
+        time {
+            color: #ccc;
+            font-size: 0.5em;
+        }
+    }
+}

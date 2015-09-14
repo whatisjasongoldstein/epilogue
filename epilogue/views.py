@@ -9,7 +9,7 @@ from .models import Document
 
 @app.route('/')
 def index():
-    posts = Document.select()
+    posts = Document.select().order_by(-Document.date_published)
     return render_template("index.html", **{
         "posts": posts,
     })

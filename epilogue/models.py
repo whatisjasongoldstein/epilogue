@@ -26,6 +26,11 @@ class Document(db.Model):
     def __unicode__(self):
         return self.title or self.draft_id
 
+    @property
+    def readable_date_published(self):
+        if self.date_published:
+            return datetime.datetime.strftime(self.date_published, "%B %d, %Y")
+
     def save(self, *args, **kwargs):
         if not self.date_published:
             self.date_published = datetime.datetime.now()
