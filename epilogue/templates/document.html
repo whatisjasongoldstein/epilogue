@@ -7,5 +7,5 @@
 {% block content %}
 <h1>{{ document.title }}</h1>
 
-{{ document.content_html|safe }}
+{{ document.post_processed_content|safe }}
 {% endblock content %}

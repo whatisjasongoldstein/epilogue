@@ -1,14 +1,24 @@
+from __future__ import division, absolute_import
+
 import os
 import re
 import requests
 import datetime
 import unicodedata
 import lxml.html
+from PIL import Image
 
 from flask import url_for
 from peewee import *
 
-from .app import db, app
+from .app import db, app, cache
+
+
+def get_size_for_img(src):
+    path = src.replace(app.static_url_path, app.static_folder, 1)
+    with Image.open(path) as im:
+        return im.size
+
 
 class Document(db.Model):
     draft_id = IntegerField()
@@ -25,6 +35,38 @@ class Document(db.Model):
 
     def __unicode__(self):
         return self.title or self.draft_id
+
+    @property
+    def cache_key(self):
+        return "document.processed_content.%s.%s" % (self.id, self.updated_at) 
+
+    @property
+    def post_processed_content(self):
+        """
+        Makes images responsive, lazy-loaded.
+        This is expensive, so cache it for 24 hours.
+        """
+        html = cache.get(self.cache_key)
+        if html is not None:
+            return html
+
+        tree = lxml.html.fragment_fromstring(self.content_html, create_parent="main")
+        elements = tree.cssselect("img")
+        for el in elements:
+            figure = lxml.html.Element("figure")
+            el.addnext(figure)
+            figure.append(el)
+
+            sizes = get_size_for_img(el.attrib["src"])
+            figure.attrib["style"] = "padding-bottom: {}%;".format((sizes[1]/sizes[0]) * 100)
+
+            el.attrib["data-src"] = el.attrib.pop("src", "")
+            el.attrib["class"] = ("%s lazyload" % el.attrib["class"] if 
+                hasattr(el.attrib, "class") else "lazyload")
+            el.attrib.pop("alt", None)
+        html = lxml.html.tostring(tree)
+        cache.set(self.cache_key, html, timeout=60 * 60 * 24)
+        return html
 
     @property
     def readable_date_published(self):

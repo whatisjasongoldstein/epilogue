@@ -4,6 +4,7 @@ import os
 from flask import Flask
 
 from playhouse.flask_utils import FlaskDB
+from werkzeug.contrib.cache import MemcachedCache
 
 APP_DIR = os.path.dirname(os.path.realpath(__file__))
 DATABASE = 'sqliteext:///%s' % os.path.join(APP_DIR, '../db/epilogue.sqlite')
@@ -17,3 +18,5 @@ app = Flask(__name__)
 app.config.from_object(__name__)
 
 db = FlaskDB(app)
+
+cache = MemcachedCache(['127.0.0.1:11211'])
