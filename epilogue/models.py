@@ -52,7 +52,10 @@ class Document(db.Model):
         images = tree.xpath("//img[@src]")
         for img in images:
             src = img.attrib["src"]
-            resp = requests.get(src)
+            try:
+                resp = requests.get(src)
+            except requests.exceptions.MissingSchema:
+                continue
 
             filename = resp.headers.get("x-file-name")
             directory = os.path.join("media/images", str(self.id))
