@@ -1,5 +1,6 @@
 import re
 import json
+import thread
 from flask import request
 from werkzeug.exceptions import BadRequest
 
@@ -47,6 +48,7 @@ def webhook():
     doc.created_at = data["created_at"]
     doc.updated_at = data["updated_at"]
     doc.save()
-    doc.download_images()
+
+    thread.start_new_thread(doc.download_images, ())
 
     return "ok"
