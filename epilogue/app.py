@@ -28,3 +28,10 @@ app.config.from_object(__name__)
 db = FlaskDB(app)
 
 cache = MemcachedCache(['127.0.0.1:11211'])
+
+
+from raven.contrib.flask import Sentry
+
+# Optional, Sentry support
+if "RAVEN_DNS_EPILOGUE" in os.environ:
+    sentry = Sentry(app, dsn=os.environ['RAVEN_DNS_EPILOGUE'])
