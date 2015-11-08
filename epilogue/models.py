@@ -15,9 +15,22 @@ from .app import db, app, cache
 
 
 def get_size_for_img(src):
+    """
+    Gets the size of an image file from its src.
+    Be careful with this - it touches the disc.
+    """
     path = src.replace(app.static_url_path, app.static_folder, 1)
     with Image.open(path) as im:
         return im.size
+
+def resize_image(path, size):
+    """
+    Limits image (path) to the dimensions passed as [w,h]
+    """
+    im = Image.open(path)
+    if im.size[0] > size[0] or im.size[1] > size[1]:
+        im.thumbnail(size, resample=Image.ANTIALIAS)
+        im.save(path)
 
 
 class Document(db.Model):
@@ -121,5 +134,8 @@ class Document(db.Model):
             with open(file_path, "wb") as f:
                 f.write(resp.content)
                 f.close()
+
+            # Resize image
+            resize_image(file_path, [900, 1000])
 
         self.save()
