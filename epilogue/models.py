@@ -70,7 +70,12 @@ class Document(db.Model):
             el.addnext(figure)
             figure.append(el)
 
-            sizes = get_size_for_img(el.attrib["src"])
+            try:
+                sizes = get_size_for_img(el.attrib["src"])
+            except IOError:
+                figure.drop_tree()  # Remove missing images
+                continue
+
             figure.attrib["style"] = "padding-bottom: {}%;".format((sizes[1]/sizes[0]) * 100)
 
             el.attrib["data-src"] = el.attrib.pop("src", "")
