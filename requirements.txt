@@ -10,3 +10,4 @@ gunicorn==19.3.0
 Pillow==3.0.0
 python-memcached==1.57
 raven==5.8.1
+cssmin==0.2.0
