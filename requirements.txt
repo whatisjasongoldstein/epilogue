@@ -12,3 +12,4 @@ python-memcached==1.57
 raven==5.8.1
 cssmin==0.2.0
 blinker==1.4
+trello
